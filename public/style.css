@@ -53,6 +53,8 @@ color: #fff;
 list-style-type: none; 
  margin: 0; 
  padding: 0; 
+ max-height: calc(100vh - 4rem); /* Altura máxima da lista de mensagens */
+  overflow-y: auto; /* Adiciona rolagem vertical se necessário */
  
 }
 #messages > li { 

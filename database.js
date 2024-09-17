@@ -1,12 +1,11 @@
 import sqlite3 from 'sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-// Converte __dirname para ES Modules
+// Configurações do banco de dados
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Conectando ao banco de dados SQLite
+const __dirname = dirname(__filename);
 const db = new sqlite3.Database(path.join(__dirname, 'messages.db'));
 
 // Função para inicializar a tabela de mensagens
