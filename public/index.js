@@ -79,13 +79,11 @@ function showNotification(message) {
   }
 }
 
-const localtime = new Date(timestamp).toLocaleString();
-
 // Função para adicionar mensagem ao DOM
 function addMessageToDOM(message, timestamp) {
   const messageElement = document.createElement('div');
   messageElement.classList.add('message');
-  messageElement.innerHTML = `<strong>${new Date(timestamp).toLocaleString()}:</strong> ${message}`;
+  messageElement.innerHTML = `<strong>${Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}:</strong> ${message}`;
   messages.appendChild(messageElement);
   messages.scrollTop = messages.scrollHeight;  // Rolagem automática para o fim
 }
