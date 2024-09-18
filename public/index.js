@@ -1,5 +1,5 @@
-
 // Cria uma conexão com o servidor WebSocket
+// TODO: ARRUMAR HORÁRIO BANCO
 const socket = io();
 
 // Seleciona elementos do DOM
@@ -23,10 +23,10 @@ form.addEventListener('submit', (e) => {
       Descrição: ${campo3.value}<br>
       Informação: ${input.value}
     `;
-    
+
     // Emite a mensagem para o servidor
     socket.emit('chat message', message);
-    
+
     // Limpa os campos do formulário
     input.value = '';
     campo1.value = '';
@@ -35,7 +35,14 @@ form.addEventListener('submit', (e) => {
   }
 });
 
-// Recebe a mensagem do servidor e a exibe na lista de mensagens
+// Recebe as mensagens anteriores do servidor e as exibe na lista de mensagens
+socket.on('previousMessages', (messagesArray) => {
+  messagesArray.reverse().forEach((msg) => {
+    addMessageToDOM(msg.message, msg.created_at);
+  });
+});
+
+// Recebe novas mensagens do servidor e as exibe na lista de mensagens
 socket.on('chat message', (msg) => {
   const item = document.createElement('li');
   item.innerHTML = msg;  // Usa innerHTML para exibir a mensagem com as quebras de linha
@@ -44,13 +51,6 @@ socket.on('chat message', (msg) => {
 
   // Exibe notificação ao receber nova mensagem
   showNotification(msg);
-});
-
-// Recebe as mensagens anteriores do servidor
-socket.on('previousMessages', (messages) => {
-  messages.forEach((msg) => {
-    addMessageToDOM(msg.message, msg.created_at);
-  });
 });
 
 // Solicita permissão para notificações
@@ -63,12 +63,12 @@ if (Notification.permission === 'default') {
 }
 
 // Função para criar uma notificação
-function showNotification(message) {  
+function showNotification(message) {
   if (Notification.permission === 'granted') {
     const notification = new Notification('Atenção! Alerta!', {
       body: message.replace(/<br>/g, '\n'), // Substitui <br> por quebras de linha nas notificações
-      icon: '/public/Hsclogo.jpg',
-      image: '/public/HscLogo.jpg'
+      icon: "./public/Hsclogo.jpg",
+      image: "./public/HscLogo.jpg"
     });
 
     // Quando o usuário clicar na notificação, a aba será focada
@@ -83,7 +83,7 @@ function showNotification(message) {
 function addMessageToDOM(message, timestamp) {
   const messageElement = document.createElement('div');
   messageElement.classList.add('message');
-  messageElement.innerHTML = `<strong>${new Date(timestamp).toLocaleString()}:</strong> ${message}`;
+  messageElement.innerHTML = `<strong>${Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}:</strong> ${message}`;
   messages.appendChild(messageElement);
   messages.scrollTop = messages.scrollHeight;  // Rolagem automática para o fim
 }
