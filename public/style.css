@@ -27,11 +27,14 @@ backdrop-filter: blur(10px);
       
       
 #input { 
-border: none; 
+
+border-radius: 15px;
 padding: 0 1rem; 
 flex-grow: 1; 
-border-radius: 2rem; 
-margin: 0.25rem; }
+margin: 0.25rem; 
+justify-content: center;
+
+}
 
 
 #input:focus { 
@@ -99,4 +102,11 @@ list-style-type: none;
 
 background: #ed7b7b;
  
+}
+
+label{
+
+margin: 15px;
+
+
 }

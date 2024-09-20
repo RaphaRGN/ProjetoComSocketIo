@@ -31,7 +31,7 @@ function insertMessage(message, callback) {
 
 // Função para buscar as últimas N mensagens
 function getLastMessages(limit, callback) {
-    const query = `SELECT message, created_at FROM messages ORDER BY created_at ASC LIMIT ?`;
+    const query = `SELECT message, created_at FROM messages ORDER BY created_at DESC LIMIT ?`;
     db.all(query, [limit], (err, rows) => {
         if (err) {
             return callback(err);
