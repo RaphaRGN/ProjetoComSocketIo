@@ -1,5 +1,4 @@
 // Cria uma conexão com o servidor WebSocket
-// TODO: ARRUMAR HORÁRIO BANCO
 const socket = io();
 
 // Seleciona elementos do DOM
@@ -26,6 +25,12 @@ form.addEventListener('submit', (e) => {
     if(!input.value){
 
       input.value='Sem informações adicionais';
+
+    }
+
+    if(!campo1.value && campo2.value == null){
+
+        alert("Preencha todos os campos necessários para a ocorrência !")
 
     }
 
@@ -82,10 +87,24 @@ function showNotification(message) {
   }
 }
 
-function Dataformatada(dateString) {
-  const date = new Date(dateString);
-  return date.toLocaleString('pt-BR');
+function getFormattedDate() {
+  const date = new Date();
 
+  // Extrai dia, mês, ano, horas, minutos e segundos
+  const dia = String(date.getDate()).padStart(2, '0');
+  const mes = String(date.getMonth() + 1).padStart(2, '0'); // Janeiro é 0!
+  const ano = date.getFullYear();
+  const horas = String(date.getHours()).padStart(2, '0');
+  const minutos = String(date.getMinutes()).padStart(2, '0');
+  const segundos = String(date.getSeconds()).padStart(2, '0');
+
+  // Retorna no formato desejado: dia/mês/ano, hh:mm:ss
+  return `${dia}/${mes}/${ano}, ${horas}:${minutos}:${segundos}`;
+}
+
+function Dataformatada(dateString) {
+
+  return dateString;
 }
 
 // Função para adicionar mensagem ao DOM
