@@ -4,34 +4,35 @@
 
         <head>
             <title>SentinelHSC</title>
-
+            <!--METAS-->
             <meta charset="UTF-8">
             <meta name="author" content="Raphael Goettzinger Neto">
             <meta name="description" content="Projeto Sentinel HSC">
             <meta name="viewport" content="width=device-width, initial-scale=1">
+            <!--Links para o CSS e para logo do Site-->
             <link rel="stylesheet"  type="text/css" href="/style.css">
-            <link rel="icon" href="./public/Hsclogo.jpg" type="image/png" sizes="100%">  
+            <link rel="icon" href="/Hsclogo.jpg" type="image/png" sizes="100%">  
         </head>
 <body>
   
   <ul id="messages"></ul>
-  <form id="form" action="">
+    <form id="form" action="">
    
-    <label for="input1">Código:</label>
-     <input id="input1" type="text" autocomplete="off" placeholder="Digite algo...">
-    <br>
+        <label for="input1">Código:</label>
+            <input id="input1" type="text" autocomplete="off" placeholder="Digite algo...">
+                <br>
    
-    <label for="input2">Título:</label>
-     <input id="input2" type="text" autocomplete="off" placeholder="Digite algo...">
-    <br>
-   
-    <label for="input3">Descrição:</label>
-     <input id="input3" type="text" autocomplete="off" placeholder="Digite algo...">
-    
-        <input id="input" autocomplete="off" /><button>Enviar</button>
+                     <label for="input2">Setor:</label>
+                         <input id="input2" type="text" autocomplete="off" placeholder="Digite algo...">
+                             <br>
+
+                                 <label for="input">Informações adicionais:</label>
+                                      <input id="input" autocomplete="off" placeholder="Digite algo..." />
+                                          <button>Enviar</button>
 
 </body>
 
+<!--Scripts-->
 <script type="module" src="/socket.io/socket.io.js"></script>
     <script type="module"src="/index.js"></script>
 

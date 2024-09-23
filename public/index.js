@@ -1,5 +1,4 @@
 // Cria uma conexão com o servidor WebSocket
-// TODO: ARRUMAR HORÁRIO BANCO
 const socket = io();
 
 // Seleciona elementos do DOM
@@ -8,21 +7,32 @@ const input = document.getElementById('input');
 const messages = document.getElementById('messages');
 const campo1 = document.getElementById('input1');
 const campo2 = document.getElementById('input2');
-const campo3 = document.getElementById('input3');
+
 
 // Adiciona um listener ao formulário para o envio
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  // Verifica se todos os campos estão preenchidos
-  if (input.value && campo1.value && campo2.value && campo3.value) {
+  // Verifica se os campos estão preenchidos
+  if (campo1.value && campo2.value) {
     // Monta a mensagem com quebras de linha em HTML
-    const message = `
-      Código: ${campo1.value}<br>
-      Título: ${campo2.value}<br>
-      Descrição: ${campo3.value}<br>
-      Informação: ${input.value}
+    const message = 
+    `Código: ${campo1.value}<br>
+     Título: ${campo2.value}<br>
+    Informações adicional: ${input.value}
     `;
+
+    if(!input.value){
+
+      input.value='Sem informações adicionais';
+
+    }
+
+    if(!campo1.value && campo2.value == null){
+
+        alert("Preencha todos os campos necessários para a ocorrência !")
+
+    }
 
     // Emite a mensagem para o servidor
     socket.emit('chat message', message);
@@ -31,7 +41,6 @@ form.addEventListener('submit', (e) => {
     input.value = '';
     campo1.value = '';
     campo2.value = '';
-    campo3.value = '';
   }
 });
 
@@ -67,8 +76,7 @@ function showNotification(message) {
   if (Notification.permission === 'granted') {
     const notification = new Notification('Atenção! Alerta!', {
       body: message.replace(/<br>/g, '\n'), // Substitui <br> por quebras de linha nas notificações
-      icon: "./public/Hsclogo.jpg",
-      image: "./public/HscLogo.jpg"
+      icon: "/Hsclogo.jpg"
     });
 
     // Quando o usuário clicar na notificação, a aba será focada
@@ -79,11 +87,32 @@ function showNotification(message) {
   }
 }
 
+function getFormattedDate() {
+  const date = new Date();
+
+  // Extrai dia, mês, ano, horas, minutos e segundos
+  const dia = String(date.getDate()).padStart(2, '0');
+  const mes = String(date.getMonth() + 1).padStart(2, '0'); // Janeiro é 0!
+  const ano = date.getFullYear();
+  const horas = String(date.getHours()).padStart(2, '0');
+  const minutos = String(date.getMinutes()).padStart(2, '0');
+  const segundos = String(date.getSeconds()).padStart(2, '0');
+
+  // Retorna no formato desejado: dia/mês/ano, hh:mm:ss
+  return `${dia}/${mes}/${ano}, ${horas}:${minutos}:${segundos}`;
+}
+
+function Dataformatada(dateString) {
+
+  return dateString;
+}
+
 // Função para adicionar mensagem ao DOM
-function addMessageToDOM(message, timestamp) {
+function addMessageToDOM(message, created_at) {
+  const HoraAtual = Dataformatada(created_at);
   const messageElement = document.createElement('div');
   messageElement.classList.add('message');
-  messageElement.innerHTML = `<strong>${Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}:</strong> ${message}`;
+  messageElement.innerHTML = `<strong>${HoraAtual}:</strong> ${message}`;
   messages.appendChild(messageElement);
   messages.scrollTop = messages.scrollHeight;  // Rolagem automática para o fim
 }
