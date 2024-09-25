@@ -15,8 +15,23 @@
         </head>
 <body>
   
-  <ul id="messages"></ul>
-    <form id="form" action="">
+
+    
+        <button class="LoginUsuario" id="loginBtn">Autenticar-se</button>  
+             <div id="loginModal" class="modal">
+                <div class="modal-content">
+                    <form>
+
+                        <input id ="inputAutenticator" type="text" placeholder="Digite o usuário para mandar mensagens" autocomplete="off">
+                        <button>Enviar</button>
+                    </form>
+                    <span class="close">&times;</span>
+                
+                </div>
+            </div>
+             
+    <ul id="messages"></ul>
+       <form id="form" action="">
    
         <label for="input1">Código:</label>
             <input id="input1" type="text" autocomplete="off" placeholder="Digite algo...">

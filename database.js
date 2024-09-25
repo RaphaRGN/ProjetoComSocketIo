@@ -7,6 +7,7 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const db = new sqlite3.Database(path.join(__dirname, 'messages.db'));
+//const userInput = document.getElementById("inputAutenticator");
 
 // Função para inicializar a tabela de mensagens
 function initDB() {
@@ -15,6 +16,13 @@ function initDB() {
         message TEXT NOT NULL,
         created_at DATETIME
     )`);
+
+    db.run(`CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user TEXT NOT NULL,
+            canSendMessages INTEGER NOT NULL CHECK (CanSendMessages IN (0, 1))
+            
+            )`);
 }
 
 // Função para obter o horário atual no formato correto para o fuso "America/Sao_Paulo"
@@ -35,7 +43,7 @@ function insertMessage(message, callback) {
     });
 }
 
-// Função para buscar as últimas N mensagens
+// Função para buscar as últimas mensagens
 function getLastMessages(limit, callback) {
     const query = `SELECT message, created_at FROM messages ORDER BY created_at DESC LIMIT ?`;
     db.all(query, [limit], (err, rows) => {
@@ -45,6 +53,29 @@ function getLastMessages(limit, callback) {
         callback(null, rows);
     });
 }
+
+// usuários
+
+/*const checkUser = (userInput) => {
+    const query = `SELECT user FROM users WHERE user = ? AND canSendMessages = 1`;
+  
+    db.all(query, [userInput], (err, rows) => {
+      if (err) {
+        console.error(err.message);
+        return;
+      }
+      
+      if (rows.length > 0) {
+        console.log("Usuário pode enviar mensagens.");
+        return true;
+      } else {
+        console.log("Usuário não encontrado ou não pode enviar mensagens.");
+        return false;
+      }
+    });
+  };
+  
+*/
 
 // Exportando as funções do banco de dados
 export default {

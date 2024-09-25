@@ -4,9 +4,10 @@ const socket = io();
 // Seleciona elementos do DOM
 const form = document.getElementById('form');
 const input = document.getElementById('input');
+const urgencyCodeField= document.getElementById('input1');
+const sectorField = document.getElementById('input2');
+const autenticationCamp = document.getElementById('inputAutenticator');
 const messages = document.getElementById('messages');
-const campo1 = document.getElementById('input1');
-const campo2 = document.getElementById('input2');
 
 
 // Adiciona um listener ao formulário para o envio
@@ -14,11 +15,11 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
 
   // Verifica se os campos estão preenchidos
-  if (campo1.value && campo2.value) {
+  if (urgencyCodeField.value && sectorField.value) {
     // Monta a mensagem com quebras de linha em HTML
     const message = 
-    `Código: ${campo1.value}<br>
-     Título: ${campo2.value}<br>
+    `Código: ${urgencyCodeField.value}<br>
+     Título: ${sectorField.value}<br>
     Informações adicional: ${input.value}
     `;
 
@@ -28,7 +29,7 @@ form.addEventListener('submit', (e) => {
 
     }
 
-    if(!campo1.value && campo2.value == null){
+    if(urgencyCodeField.value && sectorField.value == null){
 
         alert("Preencha todos os campos necessários para a ocorrência !")
 
@@ -39,8 +40,8 @@ form.addEventListener('submit', (e) => {
 
     // Limpa os campos do formulário
     input.value = '';
-    campo1.value = '';
-    campo2.value = '';
+    urgencyCodeField.value = '';
+    sectorField.value = '';
   }
 });
 
@@ -91,28 +92,28 @@ function getFormattedDate() {
   const date = new Date();
 
   // Extrai dia, mês, ano, horas, minutos e segundos
-  const dia = String(date.getDate()).padStart(2, '0');
-  const mes = String(date.getMonth() + 1).padStart(2, '0'); // Janeiro é 0!
-  const ano = date.getFullYear();
-  const horas = String(date.getHours()).padStart(2, '0');
-  const minutos = String(date.getMinutes()).padStart(2, '0');
-  const segundos = String(date.getSeconds()).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Janeiro é 0!
+  const year = date.getFullYear();
+  const hour = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
 
   // Retorna no formato desejado: dia/mês/ano, hh:mm:ss
-  return `${dia}/${mes}/${ano}, ${horas}:${minutos}:${segundos}`;
+  return `${day}/${month}/${year}, ${hour}:${minutes}:${seconds}`;
 }
 
-function Dataformatada(dateString) {
+function FormattedDate(dateString) {
 
   return dateString;
 }
 
 // Função para adicionar mensagem ao DOM
 function addMessageToDOM(message, created_at) {
-  const HoraAtual = Dataformatada(created_at);
+  const hourNow = FormattedDate(created_at);
   const messageElement = document.createElement('div');
   messageElement.classList.add('message');
-  messageElement.innerHTML = `<strong>${HoraAtual}:</strong> ${message}`;
+  messageElement.innerHTML = `<strong>${hourNow}:</strong> ${message}`;
   messages.appendChild(messageElement);
   messages.scrollTop = messages.scrollHeight;  // Rolagem automática para o fim
 }
@@ -123,3 +124,52 @@ function openNewWindow(message) {
   popupWindow.document.write('<h1>Nova Mensagem Recebida</h1>');
   popupWindow.document.write(`<p>${message}</p>`);
 }
+
+
+//Autenticação
+
+// Obtendo o modal e o botão de login com querySelector
+const modal = document.querySelector("#loginModal");
+const btn = document.querySelector("#loginBtn");
+
+// Obtendo o botão "X" para fechar o modal
+const closeBtn = document.querySelector(".close");
+
+// Função para abrir o modal
+btn.addEventListener("click", () => {
+    modal.style.display = "block";
+});
+
+// Função para fechar o modal ao clicar no "X"
+closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+});
+
+// Função para fechar o modal ao clicar fora da janela
+window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
+
+// Usuário 
+
+const checkUser = (inputAutenticator) => {
+  const query = `SELECT user FROM users WHERE user = ? AND canSendMessages = 1`;
+
+  db.all(query, [inputAutenticator], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    
+    if (rows.length > 0) {
+      console.log("Usuário pode enviar mensagens.");
+      return true;
+    } else {
+      console.log("Usuário não encontrado ou não pode enviar mensagens.");
+      return false;
+    }
+  });
+};
