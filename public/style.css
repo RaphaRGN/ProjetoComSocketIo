@@ -160,8 +160,9 @@ background-color: #0f6ad9;
 
 .close {
     color: #aaa;
-    float: right;
-    justify-content: flex-end;
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25em;
     font-size: 1.75rem;
     font-weight: bold;
     cursor: pointer;
@@ -169,4 +170,16 @@ background-color: #0f6ad9;
 
 .close:hover, .close:focus {
     color: #000;
+}
+
+.submitButton{
+    
+    background: #0f6ad9; 
+    text-align: center;
+    padding: 1rem; 
+    margin: 0.25rem; 
+    border-radius: 1rem ; 
+    outline: none; 
+    color: #fff; 
+    cursor: pointer;
 }

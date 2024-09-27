@@ -15,34 +15,37 @@
         </head>
 <body>
   
-
     
-        <button class="LoginUsuario" id="loginBtn">Autenticar-se</button>  
-             <div id="loginModal" class="modal">
-                <div class="modal-content">
-                    <form>
+    <input type="hidden" id="userStatus" value="0">
 
-                        <input id ="inputAutenticator" type="text" placeholder="Digite o usuário para mandar mensagens" autocomplete="off">
-                        <button>Enviar</button>
-                    </form>
-                    <span class="close">&times;</span>
-                
-                </div>
-            </div>
+    <!-- Button to open the login modal -->
+    <button class="LoginUsuario" id="openLoginModalBtn">Autenticar-se</button>
+
+    <!-- Login modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <form>
+                <input id="inputAutenticator" type="text" placeholder="Digite o usuário para mandar mensagens" autocomplete="off">
+                <!-- Button to submit the username -->
+                <button id="loginBtn" class="submitButton" type="button">Enviar</button>
+            </form>
+            <span class="close">&times;</span>
+        </div>
+    </div>
              
     <ul id="messages"></ul>
        <form id="form" action="">
    
         <label for="input1">Código:</label>
-            <input id="input1" type="text" autocomplete="off" placeholder="Digite algo...">
+            <input id="input1" type="text" autocomplete="off" placeholder="Digite algo..." disabled>
                 <br>
    
                      <label for="input2">Setor:</label>
-                         <input id="input2" type="text" autocomplete="off" placeholder="Digite algo...">
+                         <input id="input2" type="text" autocomplete="off" placeholder="Digite algo..." disabled>
                              <br>
 
                                  <label for="input">Informações adicionais:</label>
-                                      <input id="input" autocomplete="off" placeholder="Digite algo..." />
+                                      <input id="input" autocomplete="off" placeholder="Digite algo..." disabled />
                                           <button>Enviar</button>
 
 </body>

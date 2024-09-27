@@ -63,6 +63,22 @@ io.on('connection', (socket) => {
   });
 });
 
+io.on('connection', (socket) => {
+  console.log('Um usuário se conectou');
+
+  socket.on('authenticate user', (username, callback) => {
+    db.checkUserPermission(username, (err, canSendMessages) => {
+      if (err) {
+        callback({ success: false, message: 'Erro ao verificar usuário' });
+      } else if (canSendMessages) {
+        callback({ success: true });
+      } else {
+        callback({ success: false, message: 'Usuário não tem permissão' });
+      }
+    });
+  });
+});
+
 // Escuta para ver se o servidor está rodando e exibe a mensagem
 server.listen(PORT, HOST, () => {
   console.log(`Servidor rodando no endereço: http://${HOST}:${PORT}`);
