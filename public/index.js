@@ -8,6 +8,12 @@ const urgencyCodeField= document.getElementById('input1');
 const sectorField = document.getElementById('input2');
 const autenticationCamp = document.getElementById('inputAutenticator');
 const messages = document.getElementById('messages');
+//Autenticação
+const userStatusField = document.getElementById('userStatus');
+const loginModal = document.getElementById("loginModal");
+const openLoginModalBtn = document.getElementById("openLoginModalBtn");
+const closeModalBtn = document.querySelector(".close");
+const loginBtn = document.getElementById("loginBtn");
 
 
 // Adiciona um listener ao formulário para o envio
@@ -20,7 +26,7 @@ form.addEventListener('submit', (e) => {
     const message = 
     `Código: ${urgencyCodeField.value}<br>
      Título: ${sectorField.value}<br>
-    Informações adicional: ${input.value}
+    Informações adicional: ${input.value || 'Sem informações adicionais'}
     `;
 
     if(!input.value){
@@ -128,48 +134,55 @@ function openNewWindow(message) {
 
 //Autenticação
 
-// Obtendo o modal e o botão de login com querySelector
-const modal = document.querySelector("#loginModal");
-const btn = document.querySelector("#loginBtn");
+function authenticateUser() {
+  const username = autenticationCamp.value;
+  if (username) {
+    socket.emit('authenticate user', username, (response) => {
+      if (response.success) {
+        userStatusField.value = 1;  
+          alert('Autenticado com sucesso!');
+            loginModal.style.display = "none";
+              urgencyCodeField.disabled = false;
+                sectorField.disabled = false;
+                  input.disabled = false;
 
-// Obtendo o botão "X" para fechar o modal
-const closeBtn = document.querySelector(".close");
+  } 
+  
+    else {
+          userStatusField.value = 0;  // User cannot send messages
+            alert('Usuário não autorizado a enviar mensagens.');
+      }
+    });
+  } 
+  
+    else {
+      alert('Por favor, insira um nome de usuário válido.');
+    }
+}
 
-// Função para abrir o modal
-btn.addEventListener("click", () => {
-    modal.style.display = "block";
+// Event listener to open the modal
+openLoginModalBtn.addEventListener("click", () => {
+  loginModal.style.display = "block";
 });
 
-// Função para fechar o modal ao clicar no "X"
-closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
+// Event listener to close the modal
+closeModalBtn.addEventListener("click", () => {
+  loginModal.style.display = "none";
 });
 
-// Função para fechar o modal ao clicar fora da janela
+// Event listener to close modal when clicking outside it
 window.addEventListener("click", (event) => {
-    if (event.target === modal) {
-        modal.style.display = "none";
-    }
+  if (event.target === loginModal) {
+    loginModal.style.display = "none";
+  }
+
+  loginBtn.addEventListener("click", authenticateUser);
+
 });
 
+export default{
 
-// Usuário 
+authenticateUser
 
-const checkUser = (inputAutenticator) => {
-  const query = `SELECT user FROM users WHERE user = ? AND canSendMessages = 1`;
-
-  db.all(query, [inputAutenticator], (err, rows) => {
-    if (err) {
-      console.error(err.message);
-      return;
-    }
-    
-    if (rows.length > 0) {
-      console.log("Usuário pode enviar mensagens.");
-      return true;
-    } else {
-      console.log("Usuário não encontrado ou não pode enviar mensagens.");
-      return false;
-    }
-  });
 };
+

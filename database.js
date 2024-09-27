@@ -54,32 +54,21 @@ function getLastMessages(limit, callback) {
     });
 }
 
-// usuários
-
-/*const checkUser = (userInput) => {
-    const query = `SELECT user FROM users WHERE user = ? AND canSendMessages = 1`;
-  
-    db.all(query, [userInput], (err, rows) => {
+function checkUserPermission(username, callback) {
+  const query = `SELECT canSendMessages FROM users WHERE user = ?`;
+  db.get(query, [username], (err, row) => {
       if (err) {
-        console.error(err.message);
-        return;
+          return callback(err);
       }
-      
-      if (rows.length > 0) {
-        console.log("Usuário pode enviar mensagens.");
-        return true;
-      } else {
-        console.log("Usuário não encontrado ou não pode enviar mensagens.");
-        return false;
-      }
-    });
-  };
-  
-*/
+      callback(null, row ? row.canSendMessages === 1 : false);
+  });
+}
+
 
 // Exportando as funções do banco de dados
 export default {
     initDB,
     insertMessage,
-    getLastMessages
+    getLastMessages,
+    checkUserPermission
 };
