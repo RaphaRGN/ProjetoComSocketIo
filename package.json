@@ -3,7 +3,14 @@
     "version": "0.0.1",
     "description": "my first socket.io app",
     "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "dev": "electron ."
+    },
     "dependencies": {
         "Sentinel-chat": "file:"
+    },
+    "devDependencies": {
+        "electron": "^8.2.3"
     }
 }

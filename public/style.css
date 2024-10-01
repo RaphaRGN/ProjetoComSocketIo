@@ -44,14 +44,12 @@ outline: blue;
 
 }
       
- #form > button {
+ #form > button , .submitButton{
 
-background: #0f6ad9; 
-text-align: center;
+background: #e4350e; 
 padding: 1rem; 
-margin: 0.25rem; 
-border-radius: 1rem ; 
-outline: none; 
+margin: 0.15rem;
+border-radius: 1rem;
 color: #fff; 
 cursor: pointer;
 
@@ -139,14 +137,14 @@ background-color: #0f6ad9;
 }
 
 .modal {
-    display: none; /* Escondido por padrão */
+    display: none; 
     position: fixed;
     z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fundo semitransparente */
+    background-color: rgba(0, 0, 0, 0.5); 
 }
 
 .modal-content {
@@ -172,14 +170,3 @@ background-color: #0f6ad9;
     color: #000;
 }
 
-.submitButton{
-    
-    background: #0f6ad9; 
-    text-align: center;
-    padding: 1rem; 
-    margin: 0.25rem; 
-    border-radius: 1rem ; 
-    outline: none; 
-    color: #fff; 
-    cursor: pointer;
-}
