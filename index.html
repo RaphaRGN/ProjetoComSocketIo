@@ -11,14 +11,14 @@
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <!--Links para o CSS e para logo do Site-->
             <link rel="stylesheet"  type="text/css" href="/style.css">
-            <link rel="icon" href="/Hsclogo.jpg" type="image/png" sizes="100%">  
+            <link rel="icon" href="/Brigada.jpg" type="image/png" sizes="100%">  
         </head>
 <body>
   
     
     <input type="hidden" id="userStatus" value="0">
 
-    <!-- Button to open the login modal -->
+
     <button class="LoginUsuario" id="openLoginModalBtn">Autenticar-se</button>
 
     <!-- Login modal -->
@@ -26,7 +26,7 @@
         <div class="modal-content">
             <form>
                 <input id="inputAutenticator" type="text" placeholder="Digite o usuário para mandar mensagens" autocomplete="off">
-                <!-- Button to submit the username -->
+                
                 <button id="loginBtn" class="submitButton" type="button">Enviar</button>
             </form>
             <span class="close">&times;</span>
@@ -36,14 +36,20 @@
     <ul id="messages"></ul>
        <form id="form" action="">
    
-        <label for="input1">Código:</label>
-            <input id="input1" type="text" autocomplete="off" placeholder="Digite algo..." disabled>
-                <br>
-   
+        
+            <select name="Code" id ="input1" disabled>
+
+                <option value="Verde">Verde</option>
+                <option value="Amarelo">Amarelo</option>
+                <option value="Vermelho">Vermelho</option>
+            
+            </select>
+
+        </div>          
+            <br>
                      <label for="input2">Setor:</label>
                          <input id="input2" type="text" autocomplete="off" placeholder="Digite algo..." disabled>
                              <br>
-
                                  <label for="input">Informações adicionais:</label>
                                       <input id="input" autocomplete="off" placeholder="Digite algo..." disabled />
                                           <button>Enviar</button>

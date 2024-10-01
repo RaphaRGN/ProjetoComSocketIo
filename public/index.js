@@ -83,7 +83,7 @@ function showNotification(message) {
   if (Notification.permission === 'granted') {
     const notification = new Notification('Atenção! Alerta!', {
       body: message.replace(/<br>/g, '\n'), // Substitui <br> por quebras de linha nas notificações
-      icon: "/Hsclogo.jpg"
+      icon: "/Brigada.jpg"
     });
 
     // Quando o usuário clicar na notificação, a aba será focada
@@ -145,11 +145,13 @@ function authenticateUser() {
               urgencyCodeField.disabled = false;
                 sectorField.disabled = false;
                   input.disabled = false;
+                    openLoginModalBtn.disabled = true;
+                      openLoginModalBtn.innerText = `${username}`;
 
   } 
   
     else {
-          userStatusField.value = 0;  // User cannot send messages
+          userStatusField.value = 0;
             alert('Usuário não autorizado a enviar mensagens.');
       }
     });
@@ -160,17 +162,17 @@ function authenticateUser() {
     }
 }
 
-// Event listener to open the modal
+
 openLoginModalBtn.addEventListener("click", () => {
   loginModal.style.display = "block";
 });
 
-// Event listener to close the modal
+
 closeModalBtn.addEventListener("click", () => {
   loginModal.style.display = "none";
 });
 
-// Event listener to close modal when clicking outside it
+
 window.addEventListener("click", (event) => {
   if (event.target === loginModal) {
     loginModal.style.display = "none";
