@@ -1,16 +1,21 @@
 {
-    "name": "Sentinel-chat",
+    "name": "sentinel-chat",
     "version": "0.0.1",
-    "description": "my first socket.io app",
+    "description": "App sentinela de notificação",
     "type": "module",
-    "main": "index.js",
+    "main": "desktop.js",
     "scripts": {
-        "dev": "electron ."
+        "dev": "electron .",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
     },
+    "author": "Raphael Goettzinger Neto",
+    "license": "MIT",
     "dependencies": {
+        "sentinel-chat": "file:",
         "Sentinel-chat": "file:"
     },
     "devDependencies": {
-        "electron": "^8.2.3"
+        "electron": "23.1.3"
     }
 }
