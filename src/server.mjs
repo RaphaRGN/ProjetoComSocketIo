@@ -2,7 +2,7 @@ import express from 'express';
 import { createServer } from 'http';
 import { join, dirname } from 'path';
 import { Server } from 'socket.io';
-import db from './database.js';
+import db from './Server/database.mjs';
 import { fileURLToPath } from 'url';
 
 // Cria as constantes que serão usadas
@@ -31,7 +31,7 @@ db.initDB();
 app.use(express.static(join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  res.sendFile(join(__dirname, 'index.html'));
+  res.sendFile('/index.html', { root: '.' });
 });
 
 // Lida com o desconectamento de algum usuário

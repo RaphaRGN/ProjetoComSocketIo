@@ -1,3 +1,6 @@
+import { ipcRenderer } from 'electron';
+
+
 // Cria uma conexão com o servidor WebSocket
 const socket = io();
 
@@ -129,8 +132,10 @@ function openNewWindow(message) {
   const popupWindow = window.open('', 'Nova Mensagem', 'width=400,height=300');
   popupWindow.document.write('<h1>Nova Mensagem Recebida</h1>');
   popupWindow.document.write(`<p>${message}</p>`);
-}
 
+}
+ 
+ipcRenderer.send('show-window')
 
 //Autenticação
 
